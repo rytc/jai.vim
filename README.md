@@ -22,13 +22,13 @@ In general, for other plugin managers you have to add configuration line in `~/.
 
 ```viml
 " vim-plug
-Plug 'jansedivy/jai.vim'
+Plug 'rluba/jai.vim'
 
 " NeoBundle
-NeoBundle 'jansedivy/jai.vim'
+NeoBundle 'rluba/jai.vim'
 
 " Vundle
-Plugin 'jansedivy/jai.vim'
+Plugin 'rluba/jai.vim'
 ```
 
 ### Manual installation

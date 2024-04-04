@@ -38,26 +38,15 @@ function! FindJaiCompiler()
 	endif
 endfunction
 
-function! FindJaiModules()
-	if exists("g:jai_local_modules")
-		return " -import_dir " . g:jai_local_modules
-	else 
-        let modules_dir = getcwd() . '/modules'
-		if isdirectory(modules_dir)
-			return " -import_dir " . modules_dir
-		else
-            let local_modules_dir = 'Local_Modules'
-            if isdirectory(local_modules_dir)
-                return " -import_dir " . local_modules_dir
-            else
-                return ""
-            endif
-		endif
-	endif
+function! GetJaiMakeprg()
+    return FindJaiCompiler() . " -no_color -quiet -x64 " . FindJaiEntrypoint(expand('%'))
 endfunction
 
+function! UpdateJaiMakeprg()
+    let &l:makeprg=GetJaiMakeprg()
+endfunction
 
-let &l:makeprg=FindJaiCompiler() . " -no_color " . FindJaiEntrypoint(expand('%')) . FindJaiModules()
+call UpdateJaiMakeprg()
 
 let s:cpo_save = &cpo
 set cpo-=C
@@ -66,7 +55,7 @@ CompilerSet errorformat=
 	\%f:%l\\,%c:\ Error:\ %m,
 	\%f:%l\\,%c:\ %m,
 	\%m\ (%f:%l),
-
+execute "CompilerSet makeprg=" . escape(GetJaiMakeprg(), ' ')
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
